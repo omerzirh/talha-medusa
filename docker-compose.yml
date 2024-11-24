@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  medusa-omer:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ghcr.io/omerzirh/talha-medusa
+    container_name: medusa-talha
+    networks:
+      - medusa-network
+    environment:
+    NODE_ENV: ${NODE_ENV}
+    STORE_CORS: ${STORE_CORS}
+    ADMIN_CORS: ${ADMIN_CORS}
+    AUTH_CORS: ${AUTH_CORS}
+    REDIS_URL: ${REDIS_URL}
+    JWT_SECRET: ${JWT_SECRET}
+    COOKIE_SECRET: ${COOKIE_SECRET}
+    DATABASE_URL: ${DATABASE_URL}
+    MEDUSA_WORKER_MODE: ${MEDUSA_WORKER_MODE}
+    volumes:
+      - medusa-uploads:/app/server/uploads
+      - medusa-static:/app/server/static
+    ports:
+      - "9002:9002"
+      - "7002:7002" 
+
+volumes:
+  medusa-uploads:
+  medusa-static:
+
+networks:
+  medusa-network:
+    driver: bridge
